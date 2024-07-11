@@ -18,6 +18,7 @@
 		DA5EEAE72C3FF49300FB058B /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5EEAE62C3FF49300FB058B /* RegisterViewController.swift */; };
 		DA5EEAE92C3FFE9C00FB058B /* Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5EEAE82C3FFE9C00FB058B /* Extentions.swift */; };
 		DA7446F02C4016B900EE9102 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DA7446EF2C4016B900EE9102 /* GoogleService-Info.plist */; };
+		DAD6E2BF2C404F9200E7E8A0 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD6E2BE2C404F9200E7E8A0 /* DatabaseManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		DA5EEAE62C3FF49300FB058B /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		DA5EEAE82C3FFE9C00FB058B /* Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extentions.swift; sourceTree = "<group>"; };
 		DA7446EF2C4016B900EE9102 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		DAD6E2BE2C404F9200E7E8A0 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,6 +131,7 @@
 				DA5EEACA2C3FF02900FB058B /* AppDelegate.swift */,
 				DA5EEACC2C3FF02900FB058B /* SceneDelegate.swift */,
 				DA5EEAE82C3FFE9C00FB058B /* Extentions.swift */,
+				DAD6E2BE2C404F9200E7E8A0 /* DatabaseManager.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -273,6 +276,7 @@
 				DA5EEACF2C3FF02900FB058B /* ChatViewController.swift in Sources */,
 				DA5EEACB2C3FF02900FB058B /* AppDelegate.swift in Sources */,
 				DA5EEACD2C3FF02900FB058B /* SceneDelegate.swift in Sources */,
+				DAD6E2BF2C404F9200E7E8A0 /* DatabaseManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

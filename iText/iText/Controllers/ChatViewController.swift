@@ -4,27 +4,31 @@
 
 
 import UIKit
+import FirebaseAuth
 
 class ChatViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = .orange
         title = "Welcome Screen"
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        let isLoggedIn = UserDefaults.standard.bool(forKey: "logged_in")
-        
-        if !isLoggedIn {
+
+        checkAuthStatus()
+        DatabaseManager.shared.testDB()
+    }
+    
+    private func checkAuthStatus() {
+        if FirebaseAuth.Auth.auth().currentUser == nil {
             let loginVC = LoginViewController()
             let nav = UINavigationController(rootViewController: loginVC)
             nav.modalPresentationStyle = .fullScreen
             present(nav, animated: false)
         }
-        
     }
 }
 

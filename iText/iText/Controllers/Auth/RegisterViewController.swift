@@ -127,13 +127,17 @@ class RegisterViewController: UIViewController {
         
         //Firebase Register
         
-        FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password, completion: { result, error in
+        FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password, completion: { [weak self] result, error in
+            guard let strongSelf = self else {
+                return
+            }
             guard error == nil else {
                 print("ERROR CREATING USER")
                 return }
             
             let user = result?.user
             print("CREATED USER: \(user)")
+            strongSelf.navigationController?.dismiss(animated: true, completion: nil)
         })
     }
     
