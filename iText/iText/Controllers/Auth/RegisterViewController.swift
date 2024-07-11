@@ -3,6 +3,7 @@
 //  Created by Stanislaw Astashenko on 11/07/2024.
 
 import UIKit
+import FirebaseAuth
 
 class RegisterViewController: UIViewController {
     
@@ -21,7 +22,7 @@ class RegisterViewController: UIViewController {
     
     //TextFields
     
-    private let userNameField: UITextField = {
+    private let emailField: UITextField = {
         let field = UITextField()
         field.autocapitalizationType = .none
         field.autocorrectionType = .no
@@ -29,7 +30,7 @@ class RegisterViewController: UIViewController {
         field.layer.cornerRadius = 12
         field.layer.borderWidth = 1
         field.layer.borderColor = UIColor.gray.cgColor
-        field.placeholder = "Enter your user name"
+        field.placeholder = "Enter your email"
         field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 0))
         field.leftViewMode = .always
         field.backgroundColor = .white
@@ -72,14 +73,14 @@ class RegisterViewController: UIViewController {
         view.backgroundColor = .white
         title = "Sign In"
         
-        signinButton.addTarget(self, action: #selector(didTapLogIn), for: .touchUpInside)
-        userNameField.delegate = self
+        signinButton.addTarget(self, action: #selector(didTepRegister), for: .touchUpInside)
+        emailField.delegate = self
         passwordField.delegate = self
         
         // Subviews
         view.addSubview(scrollView)
         scrollView.addSubview(imageView)
-        scrollView.addSubview(userNameField)
+        scrollView.addSubview(emailField)
         scrollView.addSubview(passwordField)
         scrollView.addSubview(signinButton)
     }
@@ -95,12 +96,12 @@ class RegisterViewController: UIViewController {
                                  width: imageSize,
                                  height: imageSize)
         
-        userNameField.frame = CGRect(x: 30,
+        emailField.frame = CGRect(x: 30,
                                   y: imageView.bottom + 10,
                                   width: scrollView.width - 60,
                                   height: 56)
         passwordField.frame = CGRect(x: 30,
-                                     y: userNameField.bottom + 10,
+                                     y: emailField.bottom + 10,
                                      width: scrollView.width - 60,
                                      height: 56)
         signinButton.frame = CGRect(x: 30,
@@ -110,11 +111,11 @@ class RegisterViewController: UIViewController {
         
     }
     
-    @objc func didTapLogIn() {
-        userNameField.resignFirstResponder()
+    @objc func didTepRegister() {
+        emailField.resignFirstResponder()
         passwordField.resignFirstResponder()
         
-        guard let email = userNameField.text ,
+        guard let email = emailField.text ,
               let password = passwordField.text,
               !email.isEmpty,
               !password.isEmpty,
@@ -124,7 +125,16 @@ class RegisterViewController: UIViewController {
             return
         }
         
-        //FireBase SignIn
+        //Firebase Register
+        
+        FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password, completion: { result, error in
+            guard error == nil else {
+                print("ERROR CREATING USER")
+                return }
+            
+            let user = result?.user
+            print("CREATED USER: \(user)")
+        })
     }
     
     func userSignInError() {
@@ -140,10 +150,10 @@ class RegisterViewController: UIViewController {
 
 extension RegisterViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if textField  == userNameField {
+        if textField  == emailField {
             passwordField.becomeFirstResponder()
         } else if textField == passwordField {
-            didTapLogIn()
+            didTepRegister()
         }
         
         return true

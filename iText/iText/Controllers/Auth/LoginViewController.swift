@@ -3,6 +3,7 @@
 //  Created by Stanislaw Astashenko on 11/07/2024.
 
 import UIKit
+import FirebaseAuth
 
 class LoginViewController: UIViewController {
     
@@ -21,7 +22,7 @@ class LoginViewController: UIViewController {
     
     //TextFields
     
-    private let userNameField: UITextField = {
+    private let emailField: UITextField = {
         let field = UITextField()
         field.autocapitalizationType = .none
         field.autocorrectionType = .no
@@ -29,7 +30,7 @@ class LoginViewController: UIViewController {
         field.layer.cornerRadius = 12
         field.layer.borderWidth = 1
         field.layer.borderColor = UIColor.gray.cgColor
-        field.placeholder = "Enter your user name"
+        field.placeholder = "Enter your email"
         field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 0))
         field.leftViewMode = .always
         field.backgroundColor = .white
@@ -78,13 +79,13 @@ class LoginViewController: UIViewController {
                                                             action: #selector(didTapRegister))
         
         loginButton.addTarget(self, action: #selector(didTapLogIn), for: .touchUpInside)
-        userNameField.delegate = self
+        emailField.delegate = self
         passwordField.delegate = self
         
         // Subviews
         view.addSubview(scrollView)
         scrollView.addSubview(imageView)
-        scrollView.addSubview(userNameField)
+        scrollView.addSubview(emailField)
         scrollView.addSubview(passwordField)
         scrollView.addSubview(loginButton)
     }
@@ -100,12 +101,12 @@ class LoginViewController: UIViewController {
                                  width: imageSize,
                                  height: imageSize)
         
-        userNameField.frame = CGRect(x: 30,
+        emailField.frame = CGRect(x: 30,
                                   y: imageView.bottom + 10,
                                   width: scrollView.width - 60,
                                   height: 56)
         passwordField.frame = CGRect(x: 30,
-                                  y: userNameField.bottom + 10,
+                                  y: emailField.bottom + 10,
                                   width: scrollView.width - 60,
                                   height: 56)
         loginButton.frame = CGRect(x: 30,
@@ -116,10 +117,10 @@ class LoginViewController: UIViewController {
     }
     
     @objc func didTapLogIn() {
-        userNameField.resignFirstResponder()
+        emailField.resignFirstResponder()
         passwordField.resignFirstResponder()
         
-        guard let email = userNameField.text ,
+        guard let email = emailField.text ,
               let password = passwordField.text,
               !email.isEmpty, 
               !password.isEmpty,
@@ -130,6 +131,14 @@ class LoginViewController: UIViewController {
         }
         
         //FireBase LogIn
+        FirebaseAuth.Auth.auth().signIn(withEmail: email, password: password, completion: { result, error in
+            guard let result = result, error == nil else {
+                print("FAILED TO LOGIN USER - \(email)")
+                return
+            }
+            let user = result.user
+            print("LOGGED IN - \(user)")
+        })
     }
     
     func userLoginError() {
@@ -154,7 +163,7 @@ class LoginViewController: UIViewController {
 
 extension LoginViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if textField  == userNameField {
+        if textField  == emailField {
             passwordField.becomeFirstResponder()
         } else if textField == passwordField {
             didTapLogIn()
