@@ -1,9 +1,6 @@
-//
 //  SceneDelegate.swift
 //  iText
-//
-//  Created by Стас Асташенко on 11/07/2024.
-//
+//  Created by Stanislaw Astashenko on 11/07/2024.
 
 import UIKit
 
